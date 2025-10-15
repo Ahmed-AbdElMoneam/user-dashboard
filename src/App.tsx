@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect } from "react";
+import { Form, Layout, notification, Spin } from "antd";
+import HeaderSection from "./components/HeaderSection/HeaderSection";
+import FooterSection from "./components/FooterSection/FooterSection";
+import Filters from "./components/Filters/Filters";
+import DataSection from "./components/DataSection/DataSection";
+import "./styles/global.scss";
+import "@ant-design/v5-patch-for-react-19";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "./store/usersSlice";
+import type { RootState, AppDispatch } from "./store/store";
+
+const { Content } = Layout;
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [form] = Form.useForm();
+  const [api, contextHolder] = notification.useNotification();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { filteredUsers, loading, error, page, pageSize } = useSelector(
+    (state: RootState) => state.users
+  );
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      api.error({
+        message: "Error",
+        description: error,
+        placement: "topRight",
+      });
+    }
+  }, [error, api]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Layout className="layout-wrapper">
+      {contextHolder}
+      <HeaderSection />
+      <Content className="content-wrapper">
+        <Filters loading={loading} form={form} />
+        <Spin spinning={loading}>
+          <DataSection
+            users={filteredUsers.slice((page - 1) * pageSize, page * pageSize)}
+            loading={loading}
+            form={form}
+          />
+        </Spin>
+      </Content>
+      <FooterSection />
+    </Layout>
+  );
 }
 
-export default App
+export default App;

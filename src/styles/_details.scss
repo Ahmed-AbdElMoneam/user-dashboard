@@ -1,0 +1,9 @@
+.details-modal {
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+
+    .ant-avatar {
+      align-self: center;
+    }
+  }
+}

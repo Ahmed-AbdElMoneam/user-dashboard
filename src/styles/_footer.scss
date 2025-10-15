@@ -1,0 +1,15 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "base" as *;
+
+.footer-wrapper {
+  @include gradient-bg($primary-bg, $secondary-bg);
+  @extend %white-text;
+  margin-top: $footer-margin-top;
+  border-radius: $radius-lg;
+  text-align: center;
+
+  span {
+    @extend %white-text;
+  }
+}

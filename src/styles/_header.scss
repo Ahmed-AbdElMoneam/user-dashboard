@@ -1,0 +1,29 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "base" as *;
+
+.header-wrapper {
+  @include gradient-bg($primary-bg, $secondary-bg);
+  border-radius: $radius-lg;
+  height: $header-height;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  h2 {
+    @extend %white-text;
+    margin: 8px;
+    font-size: 28px;
+  }
+
+  @media screen and (max-width: 768px) {
+    h2 {
+      font-size: 21px;
+    }
+  }
+  @media screen and (max-width: 425px) {
+    h2 {
+      font-size: 16px;
+    }
+  }
+}
