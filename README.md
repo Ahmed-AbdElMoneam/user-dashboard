@@ -1,75 +1,168 @@
-# React + TypeScript + Vite
+# User Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A single-page user management dashboard built with React, TypeScript, SCSS, Redux Toolkit, and Ant Design to display, search, and paginate user data from a public API.
 
-Currently, two official plugins are available:
+This project was developed as part of a Frontend Engineer technical assessment for Quantum HR.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Live Demo
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+[View Live on Vercel](https://user-dashboard-five-ochre.vercel.app/)
 
-Note: This will impact Vite dev & build performances.
+---
 
-## Expanding the ESLint configuration
+## 📋 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **User List Overview**
+  - Displays each user's full name, email, and city/country.
+  - Responsive header and footer.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **🔍 Filtering**
+  - Search users by full name (case-insensitive).
+  - Filter works in combination with pagination.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **📄 Data Table**
+  - Paginated user list (10 per page by default).
+  - Next/Previous and page number controls.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **👤 User Details Modal**
+  - View detailed user info: name, email, phone, location, and picture.
+
+- **🔄 Refresh**
+  - Reload button to fetch a new set of users.
+
+- **⚡ Loading & Error Handling**
+  - Loading spinners for all async actions.
+  - Error notifications for API failures.
+
+- **📱 Responsive Design**
+  - Mobile-friendly layout using SCSS variables and Ant Design breakpoints.
+
+---
+
+## 🛠 Tech Stack
+
+| Technology      | Purpose                                 |
+| --------------- | --------------------------------------- |
+| React (Hooks)   | UI components and state management      |
+| TypeScript      | Type safety with interfaces             |
+| SCSS / SASS     | Modular, maintainable, responsive styling |
+| Redux Toolkit   | Centralized state management            |
+| Ant Design      | UI components and layout                |
+| Axios           | API requests                            |
+| Vite            | Fast development and build tool         |
+
+---
+
+## 📂 Project Structure
+
+```markdown
+src/
+├── components/      # Reusable UI components (Filters, DataSection, Header, Footer, Modal)
+├── store/           # Redux slices and store configuration
+├── styles/          # Global styles, variables, mixins
+├── types/           # TypeScript interfaces
+├── App.tsx          # Main app structure
+└── main.tsx         # Entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📊 User Data Structure
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```typescript
+interface IUser {
+  name: {
+    title: string;
+    first: string;
+    last: string;
+  };
+  email: string;
+  phone: string;
+  location: {
+    city: string;
+    country: string;
+  };
+  picture: {
+    large: string;
+    medium: string;
+    thumbnail: string;
+  };
+}
 ```
+
+---
+
+## ⚙️ Getting Started
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Ahmed-AbdElMoneam/quantum-hr-user-dashboard.git
+   cd quantum-hr-user-dashboard
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run Locally**
+   ```bash
+   npm run dev
+   ```
+   Then open: [http://localhost:5173](http://localhost:5173)
+
+4. **Build for Production**
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 🧠 Technical Approach
+
+**1. UI Layout**
+   - Built a single-page dashboard with Header, Filters, Table, and Modal.
+   - Used Flexbox and Ant Design grid for responsive layouts.
+
+**2. State Management**
+   - Managed all user data, search, and pagination using Redux Toolkit.
+   - Used async thunks for API integration and filtering.
+
+**3. TypeScript**
+   - Strict interfaces for user data and component props.
+   - Ensured all components are strongly typed.
+
+**4. API Integration**
+   - Used Axios to fetch users from [randomuser.me](https://randomuser.me/api/?results=50).
+   - Implemented robust loading and error handling.
+
+**5. Styling**
+   - Global styles with SCSS variables for colors, spacing, and breakpoints.
+   - Organized SCSS modules for each major component.
+
+---
+
+## ⚖️ Trade-offs & Decisions
+
+- **API vs Mock Data:** Used live API for realistic data and to demonstrate async handling.
+- **Ant Design:** Chosen for rapid UI development and responsive components.
+- **Redux Toolkit:** Centralized state for scalability and maintainability.
+- **TypeScript:** Ensured type safety and code reliability.
+- **No Add/Edit/Delete:** Focused on view/search/paginate as per requirements.
+
+---
+
+## 🧪 Bonus Features
+
+- Refresh button to reload users.
+- TypeScript throughout the codebase.
+- Loading states for all async actions.
+- Responsive design for mobile and desktop.
+
+---
+
+## 📜 License
+
+This project is for assessment purposes only.
